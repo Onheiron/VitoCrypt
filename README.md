@@ -49,12 +49,12 @@ Current issues are:
 
  - How to delete the temporary files as often as possible so that they won't remain in clear inside the `/TMP/` folder?
  - How to play video and audio inside the relative activities?
- - How to protect / obscure audio tracks? (they'll need full file XORing which is kinda longer than basic 256 / 512 bit XORing)
+ - How to protect / obscure audio tracks?
  - How to make everything work really fast or at least keep good track of process progresses.
 
 This app may aim to become:
 
- - A really fast multimedia protection system to keep your media files safe from unwanted common user display.
+ - A really fast multimedia protection system to keep your media files safe from common user display.
  - An handy yet secure file browser for crypted files.
  - A strong cryption system for more sensible files.
  - A file corruption / modification detector for encrypted files.
