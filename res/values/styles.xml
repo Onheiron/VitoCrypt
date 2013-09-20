@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+    
+    <style name="caricamento" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:padding">0dp</item>
+    </style>
+
+</resources>

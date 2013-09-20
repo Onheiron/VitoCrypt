@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">VitoCrypt</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_start">VitoCrypt</string>
+    <color name="green">#86CB86</color>
+    <color name="black">#000000</color>
+    <color name="dark_grey">#1F1F1F</color>
+    <color name="white">#FFFFFF</color>
+    <color name="littletransparent">#FF000000</color>
+
+</resources>
