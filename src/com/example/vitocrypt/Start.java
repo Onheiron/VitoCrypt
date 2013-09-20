@@ -1,10 +1,15 @@
 package com.example.vitocrypt;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 import chiper.Encrypter;
 import chiper.Protector;
@@ -25,6 +30,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Start extends TabSwipeActivity {
 
@@ -60,7 +66,11 @@ public class Start extends TabSwipeActivity {
         File[] files = new File(baseDirectory.getPath()).listFiles(); 
         for(File file : files){
         	if(!file.isDirectory()){
-        		protecter.Protect(file);
+        		try {
+					protecter.Protect(file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
         		file.delete();
         	}
         }
@@ -98,19 +108,6 @@ public class Start extends TabSwipeActivity {
 //		}
     }
     
-    public void onPause(){
-    	super.onPause();
-    	System.out.println("PAUSED");
-    }
-    
-    public void onBackPressed(){
-    	Dialog caricamento;
-    	caricamento = new Dialog(this,R.style.caricamento);
-		caricamento.setContentView(R.layout.caricamento);
-		// faccio in modo che l'utente non possa chiudere la dialog di attesa
-		caricamento.show();
-    }
-    
     public void openFile(View v){
     	String filename = (String) ((TextView)v.findViewById(R.id.textView1)).getText();
     	File currentPicture = new File("sdcard/VitoCrypt/TMP/" + filename);
@@ -119,4 +116,25 @@ public class Start extends TabSwipeActivity {
 		intent.setDataAndType(Uri.fromFile(currentPicture), "image/*");
 		startActivity(intent);
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+      MenuInflater inflater = getSupportMenuInflater();
+      inflater.inflate(R.menu.activity_start, menu);
+      return true;
+    } 
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+      switch (item.getItemId()) {
+      case R.id.action_refresh:
+        
+        break;
+
+      default:
+        break;
+      }
+
+      return true;
+    } 
 }

@@ -1,6 +1,7 @@
 package activities;
 
 import java.io.File;
+import java.io.IOException;
 
 import chiper.Protector;
 
@@ -77,7 +78,11 @@ public class ProtectedFragment extends Fragment {
 	        SharedPreferences IMSIPref = inflater.getContext().getSharedPreferences("VitoCrypt", 0);
 	        Protector protector = new Protector(IMSIPref.getString("userImsi", "123456789"));
 	        for(File file : protectedFiles){
-	        	protector.UnProtect(file);
+	        	try {
+					protector.UnProtect(file);
+				} catch (IOException e) {
+					continue;
+				}
 	        }
 			return null;
 		}

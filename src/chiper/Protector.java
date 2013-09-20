@@ -33,60 +33,105 @@ public class Protector {
 		this.key = key;
 	}
 	
-	public void Protect(File source){
+	public void Protect(File source) throws IOException{
 		
 		File shadedFile = new File(source.getParent() + "/PRT/" + source.getName());
-		try {
-			FileInputStream input = new FileInputStream(source);
-			FileOutputStream output = new FileOutputStream(shadedFile);
-			int i;
-		    byte[] b = new byte[1024];
-		    byte[] c = new byte[1024];
-		    i = input.read(b);
-		    int k = 0;
-		    for(byte j : key){
-		    	c[k] = (byte) (key[k] ^ b[k]);
-		    	k++;
-		    }
-		    output.write(c, 0, i);
-		    while((i=input.read(b))!=-1) {
-		      output.write(b, 0, i);
-		    }
-		} catch (FileNotFoundException e) {
-			// No file man
-			e.printStackTrace();
-		} catch (IOException e) {
-			// Exceptions
-			e.printStackTrace();
-		} 
+		FileInputStream input = new FileInputStream(source);
+		FileOutputStream output = new FileOutputStream(shadedFile);
+		int i;
+	    byte[] b = new byte[1024];
+	    byte[] c = new byte[1024];
+	    i = input.read(b);
+	    int k = 0;
+	    for(byte j : key){
+	    	c[k] = (byte) (j ^ b[k]);
+	    	k++;
+	    }
+	    output.write(c, 0, i);
+	    while((i=input.read(b))!=-1) {
+	      output.write(b, 0, i);
+	    }
+	    input.close();
+	    output.close();
 	}
 	
-	public File UnProtect(File source){
+	public void Protect(File source, float percentage) throws IOException{
+		
+		File shadedFile = new File(source.getParent() + "/PRT/" + source.getName());
+		int shadedBitSize = Math.round((source.length()*percentage)/256);
+		FileInputStream input = new FileInputStream(source);
+		FileOutputStream output = new FileOutputStream(shadedFile);
+		int i;
+	    byte[] b = new byte[256];
+	    byte[] c = new byte[shadedBitSize*256];
+	    for(int j = 0; j < shadedBitSize; j++){
+	    	i = input.read(b);
+	    	for(int k = 0; k < 256; k++){
+	    		c[(j*256)+k] = (byte) (b[k] ^ key[k]);
+	    	}
+	    	output.write(c, 0, i);
+	    }
+	    while((i=input.read(b))!=-1) {
+	      output.write(b, 0, i);
+	    }
+	    input.close();
+	    output.close();
+	}
+	
+	public void ProtectImage(File source) throws IOException{
+		Protect(source,(float) 0.1);
+	}
+	public void ProtectVideo(File source) throws IOException{
+		Protect(source,(float) 0.1);
+	}
+	public void ProtectAudio(File source) throws IOException{
+		Protect(source,(float) 0.5);
+	}
+	
+	public File UnProtect(File source, float percentage) throws IOException{
+		
+		File tempFile = new File(source.getParent() + "/TMP/" + source.getName());
+		int shadedBitSize = Math.round((source.length()*percentage)/256);
+		FileInputStream input = new FileInputStream(source);
+		FileOutputStream output = new FileOutputStream(tempFile);
+		int i;
+	    byte[] b = new byte[256];
+	    byte[] c = new byte[shadedBitSize*256];
+	    for(int j = 0; j < shadedBitSize; j++){
+	    	i = input.read(b);
+	    	for(int k = 0; k < 256; k++){
+	    		c[(j*256)+k] = (byte) (b[k] ^ key[k]);
+	    	}
+	    	output.write(c, 0, i);
+	    }
+	    while((i=input.read(b))!=-1) {
+	      output.write(b, 0, i);
+	    }
+	    input.close();
+	    output.close();
+	    return tempFile;
+	}
+	
+	public File UnProtect(File source) throws IOException{
 		
 		File tempFile = new File(source.getParentFile().getParent() + "/TMP/" + source.getName());
-		try {
-			FileInputStream input = new FileInputStream(source);
-			FileOutputStream output = new FileOutputStream(tempFile);
-			int i;
-		    byte[] b = new byte[1024];
-		    byte[] c = new byte[1024];
-		    i = input.read(b);
-		    int k = 0;
-		    for(byte j : b){
-		    	c[k] = (byte) (key[k%key.length] ^ b[k]);
-		    	k++;
-		    }
-		    output.write(c, 0, i);
-		    while((i=input.read(b))!=-1) {
-		      output.write(b, 0, i);
-		    }
-		} catch (FileNotFoundException e) {
-			// No file man
-			e.printStackTrace();
-		} catch (IOException e) {
-			// Exceptions
-			e.printStackTrace();
-		} 
+		FileInputStream input = new FileInputStream(source);
+		FileOutputStream output = new FileOutputStream(tempFile);
+		int i;
+	    byte[] b = new byte[1024];
+	    byte[] c = new byte[1024];
+	    i = input.read(b);
+	    int k = 0;
+	    for(byte j : key){
+	    	c[k] = (byte) (j ^ b[k]);
+	    	k++;
+	    }
+	    output.write(c, 0, i);
+	    while((i=input.read(b))!=-1) {
+	      output.write(b, 0, i);
+	    }
+	    input.close();
+	    output.close();
 		return tempFile;
 	}
 
