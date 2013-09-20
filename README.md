@@ -1,4 +1,4 @@
-VitoCrypt
+![alt tag](https://raw.github.com/Onheiron/VitoCrypt/master/res/drawable-mdpi/ic_launcher.png) VitoCrypt
 =========
 
 Multilevel media encryption for Android
