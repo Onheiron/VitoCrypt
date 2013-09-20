@@ -15,7 +15,7 @@ Here is the list of the three levels with relative goals:
       - You lend them your phone to use with their SIM (f.e. your doughter phone breaks, you lend her yours and put your SIM in that old Motorola you got).
       - Common user gets hold of your SD card but not your phone (f.e. you leave your SD card on the office table / you lend your SD card to a friend so he can listen to some music on it [but not see your protected pictures])
 
- - **Obsuration Level** : This level is just like level one, but requires a password for correct decryption (the password hash will be chained to the SIM's IMSI hash in the XORing process). This is intended to be a fast password encryption to prevent common users to see your files when :
+ - **Obscuration Level** : This level is just like level one, but requires a password for correct decryption (the password hash will be chained to the SIM's IMSI hash in the XORing process). This is intended to be a fast password encryption to prevent common users to see your files when :
       - You lend them your phone with your SIM inside of it (f.e. your doughter doesn't have a phone, you lend her yours with the SIM inside so she can call home when she's at the bus stop)
       - Common user gets hold of your phone (f.e. you leave your phone on the office desk / someone steals or finds your phone)
 
