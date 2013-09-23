@@ -751,12 +751,15 @@ containing a value of this type.
         public static final int abs__tab_unselected_focused_holo=0x7f020053;
         public static final int abs__tab_unselected_holo=0x7f020054;
         public static final int abs__tab_unselected_pressed_holo=0x7f020055;
-        public static final int directory=0x7f020056;
-        public static final int file=0x7f020057;
-        public static final int folder=0x7f020058;
-        public static final int ic_action_search=0x7f020059;
-        public static final int ic_launcher=0x7f02005a;
-        public static final int updirectory=0x7f02005b;
+        public static final int audio=0x7f020056;
+        public static final int directory=0x7f020057;
+        public static final int file=0x7f020058;
+        public static final int folder=0x7f020059;
+        public static final int ic_action_search=0x7f02005a;
+        public static final int ic_launcher=0x7f02005b;
+        public static final int image=0x7f02005c;
+        public static final int updirectory=0x7f02005d;
+        public static final int video=0x7f02005e;
     }
     public static final class id {
         public static final int FilePickerScrollView=0x7f040029;

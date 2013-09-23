@@ -37,7 +37,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
  
-public class AddFragment extends VCFragment {
+public class AddFragment extends Fragment {
  
 	public final static String EXTRA_FILE_PATH = "file_path";
 	public static final String EXTRA_TITLE = "title";
@@ -49,11 +49,12 @@ public class AddFragment extends VCFragment {
 	LinearLayout layout;
 	LinearLayout container;
 	LinearLayout back;
+	Context context;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	super.onCreate(inflater.getContext());
     	System.out.println("CREATED");
+    	this.context = inflater.getContext();
 		// Set the view to be shown if the list is empty
     	layout = (LinearLayout) inflater.inflate(R.layout.file_picker, layout);
     	this.container = (LinearLayout) layout.findViewById(R.id.fileItemContainer);
@@ -70,30 +71,17 @@ public class AddFragment extends VCFragment {
 		// Return layout
 		refreshFilesList();
 		return layout;
-    	
     }
-    
-    public void onResume(){
-    	super.onResume();
-    	System.out.println("RESUMED");
-    }
-
     public void showFiles(File directory){
     	mDirectory = directory;
-    	refreshFilesList();    	
+    	refreshFilesList();
     }
     
     public void protectFile(File file){
     	// TODO
     }
-    @Override
-    public void onStart(){
-    	super.onStart();
-    	System.out.println("START!!!");
-    }
     
     protected void refreshFilesList() {
-    	ShowLoading();
     	container.removeAllViews();
 		// Set the extension file filter
 		ExtensionFilenameFilter filter = new ExtensionFilenameFilter(acceptedFileExtensions);
@@ -108,7 +96,6 @@ public class AddFragment extends VCFragment {
 				container.addView(newItem);
 			}
 		}
-		HideLoading();
 	}
     
     public void folderBack(){

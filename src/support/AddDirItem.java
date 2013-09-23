@@ -55,7 +55,7 @@ public class AddDirItem extends LinearLayout{
 		directoryName = new TextView(context);
     	directoryThumb.setMaxWidth(50);
     	directoryThumb.setMaxHeight(50);
-    	LinearLayout.LayoutParams imageMargins = new LinearLayout.LayoutParams(50, 50);
+    	LinearLayout.LayoutParams imageMargins = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	imageMargins.setMargins(8,8,8,8);
     	directoryThumb.setLayoutParams(imageMargins);
     	directoryName.setTextSize(20);

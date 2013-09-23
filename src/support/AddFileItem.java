@@ -49,6 +49,9 @@ public class AddFileItem extends LinearLayout{
 		this.caller = caller;
 		this.context = context;
 		this.file = file;
+		String[] parts = file.getName().split("\\.");
+		System.out.println(file.getName() + " - " + parts.length);
+		String extension = parts.length > 0 ? parts[parts.length - 1] : "";
 		this.setOrientation(LinearLayout.HORIZONTAL);
 		this.setBackgroundResource(R.drawable.abs__ab_transparent_dark_holo);
     	fileThumb = new ImageView(context);
@@ -63,7 +66,13 @@ public class AddFileItem extends LinearLayout{
     	LinearLayout.LayoutParams textMargins = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	textMargins.setMargins(5,22,0,0);
     	fileName.setLayoutParams(textMargins);
-    	fileThumb.setImageURI(Uri.parse(file.getAbsolutePath()));
+    	if(extension.equalsIgnoreCase("gif") || extension.equalsIgnoreCase("jpg") || extension.equalsIgnoreCase("jpeg") || extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("bpm")){
+    		fileThumb.setImageResource(R.drawable.image);
+    	}else if(extension.equalsIgnoreCase("mp3") || extension.equalsIgnoreCase("wav")){
+    		fileThumb.setImageResource(R.drawable.audio);
+    	}else if(extension.equalsIgnoreCase("avi") || extension.equalsIgnoreCase("mp4")){
+    		fileThumb.setImageResource(R.drawable.video);
+    	}
     	fileName.setText(file.getName());
     	this.addView(fileThumb);
     	this.addView(fileName);
