@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name="Tabs"></activity>
+        <activity android:name="support.FilePickerActivity"></activity>
     </application>
 
 </manifest>

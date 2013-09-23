@@ -1,27 +1,38 @@
 package activities;
 
+import com.example.vitocrypt.R;
+import com.example.vitocrypt.Start;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
  
 public class ObscuredFragment extends Fragment {
  
     public static final String EXTRA_TITLE = "title";
+    private LayoutInflater inflater;
+    LinearLayout layout;
+    LinearLayout fileItemContainer;
+    Context context;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TextView txt = new TextView( inflater.getContext() );
-        txt.setGravity( Gravity.CENTER );
-        txt.setText( "Fragment" );
- 
-        if ( getArguments() != null && getArguments().containsKey( EXTRA_TITLE ) ) {
-            txt.setText( getArguments().getString( EXTRA_TITLE ) );
-        }
-        return txt;
+//    	File scrap = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt/TMP/");
+//    	for(File file: scrap.listFiles()) file.delete();
+    	this.context = inflater.getContext();
+        layout = (LinearLayout) inflater.inflate(R.layout.protected_layout, null);
+        fileItemContainer = (LinearLayout)layout.findViewById(R.id.fileItemContainer);
+//        caricamento.show();
+//        LoadProtected fileLoader = new LoadProtected();
+//        fileLoader.execute();
+        this.inflater = inflater;
+        return layout;
     }
  
     public static Bundle createBundle( String title ) {

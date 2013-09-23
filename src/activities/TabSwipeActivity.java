@@ -14,14 +14,12 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.example.vitocrypt.R;
  
 public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
     private ViewPager mViewPager;
     private TabsAdapter adapter;
+    private static List<Fragment> fragments = new ArrayList<Fragment>();
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +101,6 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
         public void addTab( CharSequence title, Class fragmentClass, Bundle args ) {
             final TabInfo tabInfo = new TabInfo( fragmentClass, args );
- 
             Tab tab = mActionBar.newTab();
             tab.setText( title );
             tab.setTabListener( this );
@@ -138,8 +135,8 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
         public void onTabSelected(Tab tab, FragmentTransaction ft) {
             TabInfo tabInfo = (TabInfo) tab.getTag();
             for ( int i = 0; i < mTabs.size(); i++ ) {
-                if ( mTabs.get( i ) == tabInfo ) {
-                    mPager.setCurrentItem( i );
+                if ( mTabs.get(i) == tabInfo ) {
+                    mPager.setCurrentItem(i);
                 }
             }
         }

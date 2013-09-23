@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -15,6 +16,7 @@ import chiper.Encrypter;
 import chiper.Protector;
 import chiper.Shader;
 
+import activities.AddFragment;
 import activities.CryptedFragment;
 import activities.ObscuredFragment;
 import activities.ProtectedFragment;
@@ -33,47 +35,48 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Start extends TabSwipeActivity {
-
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addTab( "Aggiungi", AddFragment.class, AddFragment.createBundle( "Aggiungi") );
         addTab( "Protetti", ProtectedFragment.class, ProtectedFragment.createBundle( "Protetti") );
         addTab( "Oscurati", ObscuredFragment.class, ObscuredFragment.createBundle( "Oscurati") );
         addTab( "Criptati", CryptedFragment.class, CryptedFragment.createBundle( "Criptati") );
-        Protector protecter;
-        TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
-        SharedPreferences IMSIPref = getSharedPreferences("VitoCrypt", 0);
-        SharedPreferences.Editor editor = IMSIPref.edit();
-        String imsi = mTelephonyMgr.getSubscriberId();
-        editor.clear();
-        editor.putString("userImsi", imsi);
-		editor.commit();
-		protecter = new Protector(imsi);
-		
-		File baseDirectory = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt");
-        if(!baseDirectory.exists()) {
-        	baseDirectory.mkdir();
-        	File cryptoDirectory = new File(baseDirectory.getPath() + "/CYP");
-        	File tempDirectory = new File(baseDirectory.getPath() + "/TMP");
-        	File shadeDirectory = new File(baseDirectory.getPath() + "/SHD");
-        	File protectDirectory = new File(baseDirectory.getPath() + "/PRT");
-        	cryptoDirectory.mkdir();
-        	tempDirectory.mkdir();
-        	shadeDirectory.mkdir();
-        	protectDirectory.mkdir();
-        }
-        
-        File[] files = new File(baseDirectory.getPath()).listFiles(); 
-        for(File file : files){
-        	if(!file.isDirectory()){
-        		try {
-					protecter.Protect(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-        		file.delete();
-        	}
-        }
+//        Protector protecter;
+//        TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
+//        SharedPreferences IMSIPref = getSharedPreferences("VitoCrypt", 0);
+//        SharedPreferences.Editor editor = IMSIPref.edit();
+//        String imsi = mTelephonyMgr.getSubscriberId();
+//        editor.clear();
+//        editor.putString("userImsi", imsi);
+//		editor.commit();
+//		protecter = new Protector(imsi);
+//		
+//		File baseDirectory = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt");
+//        if(!baseDirectory.exists()) {
+//        	baseDirectory.mkdir();
+//        	File cryptoDirectory = new File(baseDirectory.getPath() + "/CYP");
+//        	File tempDirectory = new File(baseDirectory.getPath() + "/TMP");
+//        	File shadeDirectory = new File(baseDirectory.getPath() + "/SHD");
+//        	File protectDirectory = new File(baseDirectory.getPath() + "/PRT");
+//        	cryptoDirectory.mkdir();
+//        	tempDirectory.mkdir();
+//        	shadeDirectory.mkdir();
+//        	protectDirectory.mkdir();
+//        }
+//        
+//        File[] files = new File(baseDirectory.getPath()).listFiles(); 
+//        for(File file : files){
+//        	if(!file.isDirectory()){
+//        		try {
+//					protecter.Protect(file);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//        		file.delete();
+//        	}
+//        }
         
         
         
@@ -128,7 +131,6 @@ public class Start extends TabSwipeActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
       switch (item.getItemId()) {
       case R.id.action_refresh:
-        
         break;
 
       default:

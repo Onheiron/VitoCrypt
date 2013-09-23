@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.example.vitocrypt.R;
 
+import activities.AddFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,15 +14,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class FileItem extends LinearLayout{
+public class AddFileItem extends LinearLayout{
 	
 	File file;
 	ImageView fileThumb;
 	TextView fileName;
 	Context context;
+	AddFragment caller;
 
-	public FileItem(Context context) {
+	public AddFileItem(Context context, AddFragment caller) {
 		super(context);
+		this.caller = caller;
 		this.context = context;
 		this.setOrientation(LinearLayout.HORIZONTAL);
 		this.setBackgroundResource(R.drawable.abs__ab_transparent_dark_holo);
@@ -41,8 +44,9 @@ public class FileItem extends LinearLayout{
     	this.addView(fileName);
 	}
 
-	public FileItem(Context context, File file){
+	public AddFileItem(Context context, File file, AddFragment caller){
 		super(context);
+		this.caller = caller;
 		this.context = context;
 		this.file = file;
 		this.setOrientation(LinearLayout.HORIZONTAL);
@@ -65,8 +69,7 @@ public class FileItem extends LinearLayout{
     	this.addView(fileName);
     	this.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
-				openFile();
-				
+				protectFile();
 			}
     	});
 	}
@@ -81,10 +84,7 @@ public class FileItem extends LinearLayout{
 		return this.file;
 	}
 	
-	public void openFile(){
-    	Intent intent = new Intent();
-		intent.setAction(android.content.Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.fromFile(file), "image/*");
-		context.startActivity(intent);
+	public void protectFile(){
+    	caller.protectFile(file);
 	}
 }

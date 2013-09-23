@@ -751,11 +751,16 @@ containing a value of this type.
         public static final int abs__tab_unselected_focused_holo=0x7f020053;
         public static final int abs__tab_unselected_holo=0x7f020054;
         public static final int abs__tab_unselected_pressed_holo=0x7f020055;
-        public static final int ic_action_search=0x7f020056;
-        public static final int ic_launcher=0x7f020057;
+        public static final int directory=0x7f020056;
+        public static final int file=0x7f020057;
+        public static final int folder=0x7f020058;
+        public static final int ic_action_search=0x7f020059;
+        public static final int ic_launcher=0x7f02005a;
+        public static final int updirectory=0x7f02005b;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f040028;
+        public static final int FilePickerScrollView=0x7f040029;
+        public static final int LinearLayout1=0x7f04002d;
         public static final int RelativeLayout1=0x7f040022;
         public static final int abs__action_bar=0x7f04001d;
         public static final int abs__action_bar_container=0x7f04001c;
@@ -781,11 +786,14 @@ containing a value of this type.
         public static final int abs__title=0x7f040019;
         public static final int abs__titleDivider=0x7f040015;
         public static final int abs__up=0x7f04000b;
-        public static final int action_refresh=0x7f04002a;
+        public static final int action_refresh=0x7f04002e;
         public static final int disableHome=0x7f040009;
-        public static final int fileItemContainer=0x7f040029;
+        public static final int fileItemContainer=0x7f04002a;
         public static final int fileItemLayout=0x7f040026;
         public static final int fileItemVLayout=0x7f040025;
+        public static final int filePickerBack=0x7f040028;
+        public static final int file_picker_image=0x7f04002b;
+        public static final int file_picker_text=0x7f04002c;
         public static final int homeAsUp=0x7f040006;
         public static final int imageView1=0x7f040027;
         public static final int listMode=0x7f040002;
@@ -824,10 +832,13 @@ containing a value of this type.
         public static final int activity_start=0x7f030012;
         public static final int caricamento=0x7f030013;
         public static final int file_item=0x7f030014;
-        public static final int image_viewer=0x7f030015;
-        public static final int protected_layout=0x7f030016;
-        public static final int sherlock_spinner_dropdown_item=0x7f030017;
-        public static final int sherlock_spinner_item=0x7f030018;
+        public static final int file_picker=0x7f030015;
+        public static final int file_picker_empty_view=0x7f030016;
+        public static final int file_picker_list_item=0x7f030017;
+        public static final int image_viewer=0x7f030018;
+        public static final int protected_layout=0x7f030019;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001a;
+        public static final int sherlock_spinner_item=0x7f03001b;
     }
     public static final class menu {
         public static final int activity_start=0x7f0b0000;
