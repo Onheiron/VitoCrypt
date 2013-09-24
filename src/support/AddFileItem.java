@@ -1,6 +1,7 @@
 package support;
 
 import java.io.File;
+import java.io.IOException;
 
 import com.example.vitocrypt.R;
 
@@ -78,7 +79,12 @@ public class AddFileItem extends LinearLayout{
     	this.addView(fileName);
     	this.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
-				protectFile();
+				try {
+					protectFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
     	});
 	}
@@ -93,7 +99,7 @@ public class AddFileItem extends LinearLayout{
 		return this.file;
 	}
 	
-	public void protectFile(){
-    	caller.protectFile(file);
+	public void protectFile() throws IOException{
+    	caller.protectFile(file,this);
 	}
 }

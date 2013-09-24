@@ -43,43 +43,20 @@ public class Start extends TabSwipeActivity {
         addTab( "Protetti", ProtectedFragment.class, ProtectedFragment.createBundle( "Protetti") );
         addTab( "Oscurati", ObscuredFragment.class, ObscuredFragment.createBundle( "Oscurati") );
         addTab( "Criptati", CryptedFragment.class, CryptedFragment.createBundle( "Criptati") );
-//        Protector protecter;
-//        TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
-//        SharedPreferences IMSIPref = getSharedPreferences("VitoCrypt", 0);
-//        SharedPreferences.Editor editor = IMSIPref.edit();
-//        String imsi = mTelephonyMgr.getSubscriberId();
-//        editor.clear();
-//        editor.putString("userImsi", imsi);
-//		editor.commit();
-//		protecter = new Protector(imsi);
-//		
-//		File baseDirectory = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt");
-//        if(!baseDirectory.exists()) {
-//        	baseDirectory.mkdir();
-//        	File cryptoDirectory = new File(baseDirectory.getPath() + "/CYP");
-//        	File tempDirectory = new File(baseDirectory.getPath() + "/TMP");
-//        	File shadeDirectory = new File(baseDirectory.getPath() + "/SHD");
-//        	File protectDirectory = new File(baseDirectory.getPath() + "/PRT");
-//        	cryptoDirectory.mkdir();
-//        	tempDirectory.mkdir();
-//        	shadeDirectory.mkdir();
-//        	protectDirectory.mkdir();
-//        }
-//        
-//        File[] files = new File(baseDirectory.getPath()).listFiles(); 
-//        for(File file : files){
-//        	if(!file.isDirectory()){
-//        		try {
-//					protecter.Protect(file);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//        		file.delete();
-//        	}
-//        }
         
-        
-        
+		File baseDirectory = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt");
+	    if(!baseDirectory.exists()) {
+	    	baseDirectory.mkdir();
+	    	File cryptoDirectory = new File(baseDirectory.getPath() + "/CYP");
+	    	File tempDirectory = new File(baseDirectory.getPath() + "/TMP");
+	    	File shadeDirectory = new File(baseDirectory.getPath() + "/SHD");
+	    	File protectDirectory = new File(baseDirectory.getPath() + "/PRT");
+	    	cryptoDirectory.mkdir();
+	    	tempDirectory.mkdir();
+	    	shadeDirectory.mkdir();
+	    	protectDirectory.mkdir();
+	    }
+
 //        TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
 //        String imsi = mTelephonyMgr.getSubscriberId();
 //        try {

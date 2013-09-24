@@ -26,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -77,8 +78,14 @@ public class AddFragment extends Fragment {
     	refreshFilesList();
     }
     
-    public void protectFile(File file){
-    	// TODO
+    public void protectFile(File file, AddFileItem element) throws IOException{
+    	Protector protector;
+    	TelephonyManager mTelephonyMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+    	String imsi = mTelephonyMgr.getSubscriberId();
+    	protector = new Protector(imsi);
+    	protector.Protect(file,(float) 1);
+		file.delete();
+		element.setBackgroundResource(R.color.green);
     }
     
     protected void refreshFilesList() {

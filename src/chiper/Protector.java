@@ -34,8 +34,7 @@ public class Protector {
 	}
 	
 	public void Protect(File source) throws IOException{
-		
-		File shadedFile = new File(source.getParent() + "/PRT/" + source.getName());
+		File shadedFile = new File("sdcard/VitoCrypt/PRT/" + source.getName());
 		FileInputStream input = new FileInputStream(source);
 		FileOutputStream output = new FileOutputStream(shadedFile);
 		int i;
@@ -56,18 +55,17 @@ public class Protector {
 	}
 	
 	public void Protect(File source, float percentage) throws IOException{
-		
-		File shadedFile = new File(source.getParent() + "/PRT/" + source.getName());
-		int shadedBitSize = Math.round((source.length()*percentage)/256);
+		File shadedFile = new File("sdcard/VitoCrypt/PRT/" + source.getName());
+		int shadedBitSize = Math.round((source.length()*percentage)/32);
 		FileInputStream input = new FileInputStream(source);
 		FileOutputStream output = new FileOutputStream(shadedFile);
 		int i;
-	    byte[] b = new byte[256];
-	    byte[] c = new byte[shadedBitSize*256];
+	    byte[] b = new byte[32];
+	    byte[] c = new byte[32];
 	    for(int j = 0; j < shadedBitSize; j++){
 	    	i = input.read(b);
-	    	for(int k = 0; k < 256; k++){
-	    		c[(j*256)+k] = (byte) (b[k] ^ key[k]);
+	    	for(int k = 0; k < 32; k++){
+	    		c[k] = (byte) (b[k] ^ key[k]);
 	    	}
 	    	output.write(c, 0, i);
 	    }
@@ -90,17 +88,17 @@ public class Protector {
 	
 	public File UnProtect(File source, float percentage) throws IOException{
 		
-		File tempFile = new File(source.getParent() + "/TMP/" + source.getName());
-		int shadedBitSize = Math.round((source.length()*percentage)/256);
+		File tempFile = new File("sdcard/VitoCrypt/TMP/" + source.getName());
+		int shadedBitSize = Math.round((source.length()*percentage)/32);
 		FileInputStream input = new FileInputStream(source);
 		FileOutputStream output = new FileOutputStream(tempFile);
 		int i;
-	    byte[] b = new byte[256];
-	    byte[] c = new byte[shadedBitSize*256];
+	    byte[] b = new byte[32];
+	    byte[] c = new byte[32];
 	    for(int j = 0; j < shadedBitSize; j++){
 	    	i = input.read(b);
-	    	for(int k = 0; k < 256; k++){
-	    		c[(j*256)+k] = (byte) (b[k] ^ key[k]);
+	    	for(int k = 0; k < 32; k++){
+	    		c[k] = (byte) (b[k] ^ key[k]);
 	    	}
 	    	output.write(c, 0, i);
 	    }
@@ -114,7 +112,7 @@ public class Protector {
 	
 	public File UnProtect(File source) throws IOException{
 		
-		File tempFile = new File(source.getParentFile().getParent() + "/TMP/" + source.getName());
+		File tempFile = new File("sdcard/VitoCrypt/TMP/" + source.getName());
 		FileInputStream input = new FileInputStream(source);
 		FileOutputStream output = new FileOutputStream(tempFile);
 		int i;

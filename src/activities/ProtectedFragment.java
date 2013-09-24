@@ -3,7 +3,7 @@ package activities;
 import java.io.File;
 import java.io.IOException;
 
-import support.FileItem;
+import support.ProtectFileItem;
 
 import chiper.Protector;
 
@@ -38,6 +38,7 @@ public class ProtectedFragment extends Fragment {
     LinearLayout layout;
     LinearLayout fileItemContainer;
     Context context;
+    Fragment currentFragment = this;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class ProtectedFragment extends Fragment {
 	        Protector protector = new Protector(IMSIPref.getString("userImsi", "123456789"));
 	        for(File file : protectedFiles){
 	        	try {
-					protector.UnProtect(file);
+					protector.UnProtect(file,(float) 1);
 				} catch (IOException e) {
 					continue;
 				}
@@ -91,7 +92,7 @@ public class ProtectedFragment extends Fragment {
 		protected void onPostExecute(Integer result) {
 	        File[] tempFiles = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt/TMP/").listFiles();
 	        for(File file : tempFiles){
-	        	FileItem fileItem = new FileItem(inflater.getContext(),file);
+	        	ProtectFileItem fileItem = new ProtectFileItem(inflater.getContext(),file, currentFragment);
 	        	fileItemContainer.addView(fileItem);
 	        }
 		}
