@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 
 public class ProtectFileItem extends FileItem{
-	
 	public ProtectFileItem(Context context, Fragment caller) { super(context, caller); }
 	public ProtectFileItem(Context context,File file, Fragment caller) { super(context, file, caller); }
 	@Override

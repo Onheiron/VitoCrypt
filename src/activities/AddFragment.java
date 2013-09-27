@@ -38,7 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
  
-public class AddFragment extends Fragment {
+public class AddFragment extends GenericFragment {
  
 	public final static String EXTRA_FILE_PATH = "file_path";
 	public static final String EXTRA_TITLE = "title";
@@ -50,12 +50,10 @@ public class AddFragment extends Fragment {
 	LinearLayout layout;
 	LinearLayout container;
 	LinearLayout back;
-	Context context;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	System.out.println("CREATED");
-    	this.context = inflater.getContext();
+    	super.onCreate(inflater.getContext());
 		// Set the view to be shown if the list is empty
     	layout = (LinearLayout) inflater.inflate(R.layout.file_picker, layout);
     	this.container = (LinearLayout) layout.findViewById(R.id.fileItemContainer);
@@ -83,7 +81,7 @@ public class AddFragment extends Fragment {
     	TelephonyManager mTelephonyMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
     	String imsi = mTelephonyMgr.getSubscriberId();
     	protector = new Protector(imsi);
-    	protector.Protect(file,(float) 1);
+    	protector.Protect(file,(float) 0.1);
 		file.delete();
 		element.setBackgroundResource(R.color.green);
     }
@@ -145,5 +143,7 @@ public class AddFragment extends Fragment {
         bundle.putString( EXTRA_TITLE, title );
         return bundle;
     }
+	@Override
+	public void onSelect() {}
     
 }

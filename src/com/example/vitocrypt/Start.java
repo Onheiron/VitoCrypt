@@ -39,10 +39,10 @@ public class Start extends TabSwipeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addTab( "Aggiungi", AddFragment.class, AddFragment.createBundle( "Aggiungi") );
-        addTab( "Protetti", ProtectedFragment.class, ProtectedFragment.createBundle( "Protetti") );
-        addTab( "Oscurati", ObscuredFragment.class, ObscuredFragment.createBundle( "Oscurati") );
-        addTab( "Criptati", CryptedFragment.class, CryptedFragment.createBundle( "Criptati") );
+        addTab( "Aggiungi", AddFragment.class);
+        addTab( "Protetti", ProtectedFragment.class);
+        addTab( "Oscurati", ObscuredFragment.class);
+        addTab( "Criptati", CryptedFragment.class);
         
 		File baseDirectory = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt");
 	    if(!baseDirectory.exists()) {
@@ -56,64 +56,37 @@ public class Start extends TabSwipeActivity {
 	    	shadeDirectory.mkdir();
 	    	protectDirectory.mkdir();
 	    }
-
-//        TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
-//        String imsi = mTelephonyMgr.getSubscriberId();
-//        try {
-//        	MessageDigest digest = MessageDigest.getInstance("SHA-256");
-//			byte[] SIMkey = digest.digest(imsi.getBytes("UTF-8"));
-//			File clear = new File("/sdcard/DCIM/Camera/bimba.jpg");
-//			File newClear;
-//			Encrypter e = new Encrypter(SIMkey);
-//			e.Encrypt(clear, "/sdcard/DCIM/Camera/CYP_bimba.jpg");
-//			
-//			File cacheDir = this.getCacheDir();
-//			newClear = e.Decrypt("/sdcard/DCIM/Camera/CYP_bimba.jpg", "/sdcard/DCIM/Camera/tmp_bimba.jpg");
-//			
-//			Intent intent = new Intent();
-//			intent.setAction(android.content.Intent.ACTION_VIEW);
-//			intent.setDataAndType(Uri.fromFile(newClear), "image/*");
-//			startActivity(intent);
-//			
-//			
-//		} catch (UnsupportedEncodingException e) {
-//			// I know it's supported dummy
-//			e.printStackTrace();
-//		} catch (NoSuchAlgorithmException e) {
-//			// Right
-//			e.printStackTrace();
-//		} catch (InvalidKeyException e) {
-//			// Oh come on!
-//			e.printStackTrace();
-//		}
     }
-    
-    public void openFile(View v){
-    	String filename = (String) ((TextView)v.findViewById(R.id.textView1)).getText();
-    	File currentPicture = new File("sdcard/VitoCrypt/TMP/" + filename);
-    	Intent intent = new Intent();
-		intent.setAction(android.content.Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.fromFile(currentPicture), "image/*");
-		startActivity(intent);
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-      MenuInflater inflater = getSupportMenuInflater();
-      inflater.inflate(R.menu.activity_start, menu);
-      return true;
-    } 
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-      switch (item.getItemId()) {
-      case R.id.action_refresh:
-        break;
-
-      default:
-        break;
-      }
-
-      return true;
-    } 
 }
+/**
+ * @TODO clean poop
+ * */
+//TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
+//String imsi = mTelephonyMgr.getSubscriberId();
+//try {
+//	MessageDigest digest = MessageDigest.getInstance("SHA-256");
+//	byte[] SIMkey = digest.digest(imsi.getBytes("UTF-8"));
+//	File clear = new File("/sdcard/DCIM/Camera/bimba.jpg");
+//	File newClear;
+//	Encrypter e = new Encrypter(SIMkey);
+//	e.Encrypt(clear, "/sdcard/DCIM/Camera/CYP_bimba.jpg");
+//	
+//	File cacheDir = this.getCacheDir();
+//	newClear = e.Decrypt("/sdcard/DCIM/Camera/CYP_bimba.jpg", "/sdcard/DCIM/Camera/tmp_bimba.jpg");
+//	
+//	Intent intent = new Intent();
+//	intent.setAction(android.content.Intent.ACTION_VIEW);
+//	intent.setDataAndType(Uri.fromFile(newClear), "image/*");
+//	startActivity(intent);
+//	
+//	
+//} catch (UnsupportedEncodingException e) {
+//	// I know it's supported dummy
+//	e.printStackTrace();
+//} catch (NoSuchAlgorithmException e) {
+//	// Right
+//	e.printStackTrace();
+//} catch (InvalidKeyException e) {
+//	// Oh come on!
+//	e.printStackTrace();
+//}

@@ -1,9 +1,11 @@
 package activities;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
  
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -19,7 +21,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
     private ViewPager mViewPager;
     private TabsAdapter adapter;
-    private static List<Fragment> fragments = new ArrayList<Fragment>();
+    private static Fragment[] fragments = new Fragment[4];
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,8 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
      * @param fragmentClass The class of the Fragment to instantiate for this tab
      * @param args An optional Bundle to pass along to the Fragment (may be null)
      */
-    protected void addTab(int titleRes, Class fragmentClass, Bundle args ) {
-        adapter.addTab( getString( titleRes ), fragmentClass, args );
+    protected void addTab(int titleRes, Class fragmentClass) {
+        adapter.addTab( getString( titleRes ), fragmentClass);
     }
     /**
      * Add a tab with a backing Fragment to the action bar
@@ -64,8 +66,8 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
      * @param fragmentClass The class of the Fragment to instantiate for this tab
      * @param args An optional Bundle to pass along to the Fragment (may be null)
      */
-    protected void addTab(CharSequence title, Class fragmentClass, Bundle args ) {
-        adapter.addTab( title, fragmentClass, args );
+    protected void addTab(CharSequence title, Class fragmentClass) {
+        adapter.addTab( title, fragmentClass);
     }
  
     private static class TabsAdapter extends FragmentStatePagerAdapter implements TabListener, ViewPager.OnPageChangeListener {
@@ -99,14 +101,13 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
  
         private List mTabs = new ArrayList();
  
-        public void addTab( CharSequence title, Class fragmentClass, Bundle args ) {
-            final TabInfo tabInfo = new TabInfo( fragmentClass, args );
+        public void addTab(CharSequence title, Class fragmentClass) {
+            final TabInfo tabInfo = new TabInfo( fragmentClass, null);
             Tab tab = mActionBar.newTab();
             tab.setText( title );
             tab.setTabListener( this );
             tab.setTag( tabInfo );
             mTabs.add( tabInfo );
- 
             mActionBar.addTab( tab );
             notifyDataSetChanged();
         }
@@ -114,7 +115,9 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             final TabInfo tabInfo = (TabInfo) mTabs.get(position);
-            return (Fragment) Fragment.instantiate( mActivity, tabInfo.fragmentClass.getName(), tabInfo.args );
+            Fragment f = (Fragment) Fragment.instantiate( mActivity, tabInfo.fragmentClass.getName(), tabInfo.args );
+            fragments[position] = f;
+            return f;
         }
  
         @Override
@@ -129,7 +132,7 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
         }
  
         public void onPageSelected(int position) {
-            mActionBar.setSelectedNavigationItem( position );
+            mActionBar.setSelectedNavigationItem(position);
         }
  
         public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -137,11 +140,14 @@ public abstract class TabSwipeActivity extends SherlockFragmentActivity {
             for ( int i = 0; i < mTabs.size(); i++ ) {
                 if ( mTabs.get(i) == tabInfo ) {
                     mPager.setCurrentItem(i);
+                    if(fragments[i] != null) ((GenericFragment)fragments[i]).onSelect();
                 }
             }
         }
  
         public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        	File scrap = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt/TMP/");
+        	for(File file: scrap.listFiles()) file.delete();
         }
  
         public void onTabReselected(Tab tab, FragmentTransaction ft) {

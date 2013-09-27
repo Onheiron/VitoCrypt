@@ -6,7 +6,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.widget.LinearLayout;
 
-public class VCFragment extends Fragment{
+public abstract class GenericFragment extends Fragment{
 	
 	boolean created = false;
 	Dialog caricamento;
@@ -29,5 +29,7 @@ public class VCFragment extends Fragment{
 	public void HideLoading(){
 		this.caricamento.dismiss();
 	}
+	
+	public abstract void onSelect();
 
 }

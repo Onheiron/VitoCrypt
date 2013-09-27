@@ -2,6 +2,8 @@ package support;
 
 import java.io.File;
 
+import magic.TypeMagic;
+
 import com.example.vitocrypt.R;
 
 import activities.AddFragment;
@@ -22,18 +24,17 @@ public abstract class FileItem extends LinearLayout{
 	TextView fileName;
 	String fileType;
 	Context context;
-	AddFragment caller;
+	Fragment caller;
 
 	public FileItem(Context context, Fragment caller) {
 		super(context);
 		this.context = context;
+		this.caller = caller;
 		this.setOrientation(LinearLayout.HORIZONTAL);
 		this.setBackgroundResource(R.drawable.abs__ab_transparent_dark_holo);
     	fileThumb = new ImageView(context);
     	fileName = new TextView(context);
-    	fileThumb.setMaxWidth(50);
-    	fileThumb.setMaxHeight(50);
-    	LinearLayout.LayoutParams imageMargins = new LinearLayout.LayoutParams(50, 50);
+    	LinearLayout.LayoutParams imageMargins = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	imageMargins.setMargins(8,8,8,8);
     	fileThumb.setLayoutParams(imageMargins);
     	fileName.setTextSize(20);
@@ -48,6 +49,7 @@ public abstract class FileItem extends LinearLayout{
 	public FileItem(Context context, File file, Fragment caller){
 		super(context);
 		this.context = context;
+		this.caller = caller;
 		this.file = file;
 		this.setOrientation(LinearLayout.HORIZONTAL);
 		this.setBackgroundResource(R.drawable.abs__ab_transparent_dark_holo);
@@ -55,9 +57,7 @@ public abstract class FileItem extends LinearLayout{
 		String extension = parts.length > 0 ? parts[parts.length - 1] : "";
     	fileThumb = new ImageView(context);
     	fileName = new TextView(context);
-    	fileThumb.setMaxWidth(50);
-    	fileThumb.setMaxHeight(50);
-    	LinearLayout.LayoutParams imageMargins = new LinearLayout.LayoutParams(50, 50);
+    	LinearLayout.LayoutParams imageMargins = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	imageMargins.setMargins(8,8,8,8);
     	fileThumb.setLayoutParams(imageMargins);
     	fileName.setTextSize(20);
@@ -65,13 +65,16 @@ public abstract class FileItem extends LinearLayout{
     	LinearLayout.LayoutParams textMargins = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     	textMargins.setMargins(5,22,0,0);
     	fileName.setLayoutParams(textMargins);
-    	if(extension.equalsIgnoreCase("gif") || extension.equalsIgnoreCase("jpg") || extension.equalsIgnoreCase("jpeg") || extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("bpm")){
+    	if(file.isDirectory()){
+    		fileThumb.setImageResource(R.drawable.directory);
+    		fileType = "directory";
+    	}else if(java.util.Arrays.binarySearch(TypeMagic.IMAGE_TYPES, extension) >= 0){
     		fileThumb.setImageResource(R.drawable.image);
     		fileType = "image";
-    	}else if(extension.equalsIgnoreCase("mp3") || extension.equalsIgnoreCase("wav")){
+    	}else if(java.util.Arrays.binarySearch(TypeMagic.AUDIO_TYPES, extension) >= 0){
     		fileThumb.setImageResource(R.drawable.audio);
     		fileType = "audio";
-    	}else if(extension.equalsIgnoreCase("avi") || extension.equalsIgnoreCase("mp4")){
+    	}else if(java.util.Arrays.binarySearch(TypeMagic.VIDEO_TYPES, extension) >= 0){
     		fileThumb.setImageResource(R.drawable.video);
     		fileType = "video";
     	}

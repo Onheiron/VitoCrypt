@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,57 +32,42 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
  
-public class ProtectedFragment extends Fragment {
+public class ProtectedFragment extends GenericFragment {
  
     public static final String EXTRA_TITLE = "title";
     private LayoutInflater inflater;
     LinearLayout layout;
     LinearLayout fileItemContainer;
-    Context context;
     Fragment currentFragment = this;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//    	File scrap = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt/TMP/");
-//    	for(File file: scrap.listFiles()) file.delete();
-    	this.context = inflater.getContext();
+    	super.onCreate(inflater.getContext());
         layout = (LinearLayout) inflater.inflate(R.layout.protected_layout, null);
         fileItemContainer = (LinearLayout)layout.findViewById(R.id.fileItemContainer);
-//        caricamento.show();
-//        LoadProtected fileLoader = new LoadProtected();
-//        fileLoader.execute();
         this.inflater = inflater;
         return layout;
     }
     
-    public void onPause(){
-    	super.onPause();
-    }
-    public void onResume(){
-    	super.onResume();
-    	File scrap = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt/TMP/");
-    	for(File file: scrap.listFiles()) file.delete();
+	@Override
+	public void onSelect() {
     	fileItemContainer.removeAllViews();
         LoadProtected fileLoader = new LoadProtected();
+        ShowLoading();
         fileLoader.execute();
-    }
-    
-    public static Bundle createBundle( String title ) {
-        Bundle bundle = new Bundle();
-        bundle.putString( EXTRA_TITLE, title );
-        return bundle;
-    }
+	}
     
     private class LoadProtected extends AsyncTask<Integer,Integer,Integer>{
 
 		@Override
 		protected Integer doInBackground(Integer... params) {
 			File[] protectedFiles = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt/PRT/").listFiles();
-	        SharedPreferences IMSIPref = inflater.getContext().getSharedPreferences("VitoCrypt", 0);
-	        Protector protector = new Protector(IMSIPref.getString("userImsi", "123456789"));
+			TelephonyManager mTelephonyMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+	    	String imsi = mTelephonyMgr.getSubscriberId();
+	    	Protector protector = new Protector(imsi);
 	        for(File file : protectedFiles){
 	        	try {
-					protector.UnProtect(file,(float) 1);
+					protector.UnProtect(file,(float) 0.1);
 				} catch (IOException e) {
 					continue;
 				}
@@ -95,6 +81,7 @@ public class ProtectedFragment extends Fragment {
 	        	ProtectFileItem fileItem = new ProtectFileItem(inflater.getContext(),file, currentFragment);
 	        	fileItemContainer.addView(fileItem);
 	        }
+	        HideLoading();
 		}
     	
     }

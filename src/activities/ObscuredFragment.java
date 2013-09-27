@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
  
-public class ObscuredFragment extends Fragment {
+public class ObscuredFragment extends GenericFragment {
  
     public static final String EXTRA_TITLE = "title";
     private LayoutInflater inflater;
@@ -40,5 +40,11 @@ public class ObscuredFragment extends Fragment {
         bundle.putString( EXTRA_TITLE, title );
         return bundle;
     }
+
+	@Override
+	public void onSelect() {
+		// TODO Auto-generated method stub
+		
+	}
  
 }

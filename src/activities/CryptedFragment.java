@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
  
-public class CryptedFragment extends Fragment {
+public class CryptedFragment extends GenericFragment {
  
     public static final String EXTRA_TITLE = "title";
     
@@ -29,5 +29,11 @@ public class CryptedFragment extends Fragment {
         bundle.putString( EXTRA_TITLE, title );
         return bundle;
     }
+
+	@Override
+	public void onSelect() {
+		// TODO Auto-generated method stub
+		
+	}
  
 }
