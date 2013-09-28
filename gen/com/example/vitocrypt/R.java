@@ -856,9 +856,8 @@ containing a value of this type.
          */
         public static final int abs__action_mode_done=0x7f090003;
         public static final int app_name=0x7f090004;
-        public static final int hello_world=0x7f090005;
-        public static final int menu_settings=0x7f090006;
-        public static final int title_activity_start=0x7f090007;
+        public static final int menu_settings=0x7f090005;
+        public static final int title_activity_start=0x7f090006;
     }
     public static final class style {
         public static final int AppTheme=0x7f0a004e;

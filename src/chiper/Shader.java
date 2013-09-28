@@ -35,6 +35,8 @@ public class Shader {
 		    while((i=input.read(b))!=-1) {
 		      output.write(b, 0, i);
 		    }
+		    input.close();
+		    output.close();
 		} catch (FileNotFoundException e) {
 			// No file man
 			e.printStackTrace();
@@ -62,6 +64,8 @@ public class Shader {
 		    while((i=input.read(b))!=-1) {
 		      output.write(b, 0, i);
 		    }
+		    input.close();
+		    output.close();
 		} catch (FileNotFoundException e) {
 			// No file man
 			e.printStackTrace();

@@ -1,40 +1,28 @@
 package com.example.vitocrypt;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-import chiper.Encrypter;
-import chiper.Protector;
-import chiper.Shader;
 
 import activities.AddFragment;
 import activities.CryptedFragment;
 import activities.ObscuredFragment;
 import activities.ProtectedFragment;
 import activities.TabSwipeActivity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.app.Dialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class Start extends TabSwipeActivity {
+	
+	File SDFolder;
+	File baseDirectory;
+	File cryptoDirectory;
+	File tempDirectory;
+	File shadeDirectory;
+	File protectDirectory;
+	
+	TelephonyManager mTelephonyMgr;
+	String imsi;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,19 +32,32 @@ public class Start extends TabSwipeActivity {
         addTab( "Oscurati", ObscuredFragment.class);
         addTab( "Criptati", CryptedFragment.class);
         
-		File baseDirectory = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt");
+        mTelephonyMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        imsi = mTelephonyMgr.getSubscriberId();
+        
+        SDFolder = Environment.getExternalStorageDirectory();
+        baseDirectory = new File(Environment.getExternalStorageDirectory() + "/VitoCrypt");
+        cryptoDirectory = new File(baseDirectory.getPath() + "/CYP");
+        tempDirectory = new File(baseDirectory.getPath() + "/TMP");
+        shadeDirectory = new File(baseDirectory.getPath() + "/SHD");
+        protectDirectory = new File(baseDirectory.getPath() + "/PRT");
+       
 	    if(!baseDirectory.exists()) {
 	    	baseDirectory.mkdir();
-	    	File cryptoDirectory = new File(baseDirectory.getPath() + "/CYP");
-	    	File tempDirectory = new File(baseDirectory.getPath() + "/TMP");
-	    	File shadeDirectory = new File(baseDirectory.getPath() + "/SHD");
-	    	File protectDirectory = new File(baseDirectory.getPath() + "/PRT");
 	    	cryptoDirectory.mkdir();
 	    	tempDirectory.mkdir();
 	    	shadeDirectory.mkdir();
 	    	protectDirectory.mkdir();
 	    }
     }
+    
+    public File getSDFolder(){ return this.SDFolder; }
+    public File getBaseDirectory(){ return this.baseDirectory; }
+    public File getTempDirectory(){ return this.tempDirectory; }
+    public File getProtectDirectory(){ return this.protectDirectory; }
+    public File getShadeDirectory(){ return this.shadeDirectory; }
+    public File getCryptoDirectory(){ return this.cryptoDirectory; }
+    public String getIMSI(){ return this.imsi; }
 }
 /**
  * @TODO clean poop
