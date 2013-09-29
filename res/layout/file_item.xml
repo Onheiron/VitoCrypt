@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fileItemVLayout"
+    android:id="@+id/LinearLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/abs__ab_transparent_dark_holo"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/fileItemLayout"
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/ProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:background="@color/dark_grey"
-        android:onClick="openFile"
-        android:orientation="horizontal" >
+        android:indeterminate="false"
+        android:maxHeight="5dip"
+        android:minHeight="5dip"
+        android:progress="50"
+        android:progressDrawable="@drawable/greenprogress"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:src="@drawable/abs__ab_bottom_solid_light_holo" />
+            android:src="@drawable/abs__ab_bottom_solid_dark_holo" />
 
         <TextView
             android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="22dp"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"

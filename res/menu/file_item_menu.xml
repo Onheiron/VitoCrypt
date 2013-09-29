@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/view"
+          android:title="Visualizza"/>
+    <item android:id="@+id/protect"
+          android:title="Proteggi" />
+    <item android:id="@+id/obscure"
+          android:title="Oscura" />
+    <item android:id="@+id/crypt"
+          android:title="Cripta" />
+</menu>

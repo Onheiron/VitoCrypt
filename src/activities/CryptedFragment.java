@@ -2,10 +2,12 @@ package activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.TextView;
  
 public class CryptedFragment extends GenericFragment {
@@ -34,6 +36,12 @@ public class CryptedFragment extends GenericFragment {
 	public void onSelect() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    menu.getItem(3).setVisible(false);
 	}
  
 }

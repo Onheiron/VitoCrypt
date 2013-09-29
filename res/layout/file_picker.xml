@@ -28,21 +28,12 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"
             android:textSize="20dp" />
-
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/FilePickerScrollView"
+    <ListView
+        android:id="@+id/fileList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" >
-
-        <LinearLayout
-            android:id="@+id/fileItemContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>

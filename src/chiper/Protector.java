@@ -2,11 +2,20 @@ package chiper;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import com.example.vitocrypt.R;
+
+import support.FileItem;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.widget.ProgressBar;
 
 public class Protector {
 	
@@ -27,9 +36,6 @@ public class Protector {
 			e.printStackTrace();
 			this.key = key.getBytes();
 		}
-	}
-	public Protector(byte[] key){
-		this.key = key;
 	}
 	
 	public void Protect(File source) throws IOException{
@@ -53,10 +59,10 @@ public class Protector {
 	    output.close();
 	}
 	
-	public void Protect(File source, float percentage) throws IOException{
-		File shadedFile = new File("sdcard/VitoCrypt/PRT/" + source.getName());
-		int shadedBitSize = Math.round((source.length()*percentage)/32);
-		FileInputStream input = new FileInputStream(source);
+	public void Protect(FileItem source, float percentage) throws IOException{
+		File shadedFile = new File("sdcard/VitoCrypt/PRT/" + source.getFile().getName());
+		int shadedBitSize = Math.round((source.getFile().length()*percentage)/32);
+		FileInputStream input = new FileInputStream(source.getFile());
 		FileOutputStream output = new FileOutputStream(shadedFile);
 		int i;
 	    byte[] b = new byte[32];
@@ -75,13 +81,13 @@ public class Protector {
 	    output.close();
 	}
 	
-	public void ProtectImage(File source) throws IOException{
+	public void ProtectImage(FileItem source) throws IOException{
 		Protect(source,(float) 0.1);
 	}
-	public void ProtectVideo(File source) throws IOException{
+	public void ProtectVideo(FileItem source) throws IOException{
 		Protect(source,(float) 0.1);
 	}
-	public void ProtectAudio(File source) throws IOException{
+	public void ProtectAudio(FileItem source) throws IOException{
 		Protect(source,(float) 0.5);
 	}
 	
@@ -131,5 +137,4 @@ public class Protector {
 	    output.close();
 		return tempFile;
 	}
-
 }

@@ -5,5 +5,14 @@
     <style name="caricamento" parent="@android:style/Theme.Translucent.NoTitleBar">
         <item name="android:padding">0dp</item>
     </style>
+    
+    <style name="autoscroll">
+    	<item name="android:singleLine">true</item>
+    	<item name="android:ellipsize">marquee</item>
+    	<item name="android:marqueeRepeatLimit">marquee_forever</item>
+    	<item name="android:focusable">true</item>
+    	<item name="android:focusableInTouchMode">true</item>
+    	<item name="android:scrollHorizontally">true</item>
+	</style>
 
 </resources>

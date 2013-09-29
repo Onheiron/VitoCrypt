@@ -5,16 +5,26 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 
 import magic.TypeMagic;
-import support.AddDirItem;
-import support.AddFileItem;
+import support.FileItem;
 import chiper.Protector;
 import com.example.vitocrypt.R;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.LinearLayout;
+import android.widget.ListView;
  
 public class AddFragment extends GenericFragment {
  
@@ -24,16 +34,22 @@ public class AddFragment extends GenericFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	
-    	super.onCreate(inflater.getContext());
     	layout = (LinearLayout) inflater.inflate(R.layout.file_picker, layout);
-    	this.container = (LinearLayout) layout.findViewById(R.id.fileItemContainer);
+    	super.onCreate(inflater.getContext(), (ListView) layout.findViewById(R.id.fileList));
+		this.container.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+			public void onItemClick(AdapterView<?> AdapterView, View SelectedView, int position, long id) {
+				FileItem item = (FileItem) SelectedView;
+				if(item.getFileType().equalsIgnoreCase("directory")) showFiles(item.getFile());
+				else start.openContextMenu(item);
+			}
+		});
     	this.back = (LinearLayout) layout.findViewById(R.id.filePickerBack);
     	this.back.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
 				folderBack();
 			}	
     	});
-		mDirectory = context.getSDFolder();
+		mDirectory = start.getSDFolder();
 		refreshFilesList();
 		return layout;
     }
@@ -42,31 +58,24 @@ public class AddFragment extends GenericFragment {
     	refreshFilesList();
     }
     
-    public void protectFile(File file, AddFileItem element) throws IOException{
-    	Protector protector;
-    	protector = new Protector(context.getIMSI());
-    	protector.Protect(file,(float) 0.1);
-		file.delete();
-		element.setBackgroundResource(R.color.green);
-    }
-    
     protected void refreshFilesList() {
-    	container.removeAllViews();
+    	adapter.clear();
 		ExtensionFilenameFilter filter = new ExtensionFilenameFilter(TypeMagic.ACCEPTED_TYPES);
 		File[] files = mDirectory.listFiles(filter);
 		if(files != null && files.length > 0) {
 			for(File f : files) {
 				if(f.isHidden()) continue;
 				LinearLayout newItem;
-				if(f.isDirectory()) newItem = new AddDirItem(context,f,this);
-				else  newItem = new AddFileItem(context,f,this);
-				container.addView(newItem);
+				newItem = new FileItem(start,f,this);
+				adapter.addItem((FileItem) newItem);
 			}
 		}
+		container.setAdapter(adapter);
+		registerForContextMenu(container);
 	}
     
     public void folderBack(){
-    	if(!mDirectory.getName().equalsIgnoreCase(context.getSDFolder().getName())){
+    	if(!mDirectory.getName().equalsIgnoreCase(start.getSDFolder().getName())){
     		mDirectory = new File(mDirectory.getParent());
     		refreshFilesList();
     	}
@@ -95,5 +104,9 @@ public class AddFragment extends GenericFragment {
 	}
 	@Override
 	public void onSelect() {}
-    
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	}
 }
