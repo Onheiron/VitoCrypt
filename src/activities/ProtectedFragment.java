@@ -47,7 +47,7 @@ public class ProtectedFragment extends GenericFragment {
         fileLoader.execute();
 	}
     
-    private class LoadProtected extends AsyncTask<Integer,File,Integer>{
+    private class LoadProtected extends AsyncTask<Integer,FileItem,Integer>{
 
 		@Override
 		protected Integer doInBackground(Integer... params) {
@@ -55,16 +55,18 @@ public class ProtectedFragment extends GenericFragment {
 	    	Protector protector = new Protector(start.getIMSI());
 	        for(File file : protectedFiles){
 	        	try {
-	        		publishProgress(protector.UnProtect(file,(float) 0.1));
+	        		FileItem newFileItem = new FileItem(start,new File("sdcard/VitoCrypt/TMP/" + file.getName()),thisFragment);
+	        		newFileItem.ShowLoading();
+	        		protector.UnProtect(file, newFileItem,(float) 0.1);
+	        		publishProgress(newFileItem);
 				} catch (IOException e) {
 					continue;
 				}
 	        }
 			return null;
 		}
-		protected void onProgressUpdate(File... files) {
-	         FileItem fileItem = new FileItem(start,files[0], thisFragment);
-	         adapter.addItem(fileItem);
+		protected void onProgressUpdate(FileItem... files) {
+	         adapter.addItem(files[0]);
 	         container.setAdapter(adapter);
 	     }
 		@Override

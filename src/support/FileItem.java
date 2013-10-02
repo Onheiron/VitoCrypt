@@ -7,6 +7,7 @@ import magic.TypeMagic;
 import com.example.vitocrypt.R;
 import com.example.vitocrypt.Start;
 
+import activities.GenericFragment;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
@@ -20,15 +21,19 @@ public class FileItem extends LinearLayout{
 	ImageView fileThumb;
 	TextView fileName;
 	Start context;
+	Fragment caller;
+	ProgressBar loading;
 	private String fileType;
 
 	public FileItem(Context context, File file, Fragment caller){
 		super(context);
 		this.context = (Start) context;
+		this.caller = caller;
 		this.file = file;
 		LinearLayout.inflate(context, R.layout.file_item, this);
 		fileThumb = (ImageView) findViewById(R.id.imageView1);
 		fileName = (TextView) findViewById(R.id.textView1);
+		loading = (ProgressBar) findViewById(R.id.ProgressBar);
 		String[] parts = file.getName().split("\\.");
 		String extension = parts.length > 0 ? parts[parts.length - 1] : "";
 		
@@ -50,4 +55,10 @@ public class FileItem extends LinearLayout{
 	
 	public File getFile(){ return this.file; }
 	public String getFileType() { return fileType; }
+	public void ShowLoading(){ loading.setVisibility(VISIBLE); }
+	public void HideLoading(){ loading.setVisibility(GONE); }
+	public void setProgress(int progress){ loading.setProgress(progress); }
+	public void refreshAdapter(){ ((GenericFragment)caller).refreshAdapter(); }
+	public GenericFragment getCaller(){ return (GenericFragment) this.caller; }
+	
 }

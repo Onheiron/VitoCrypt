@@ -14,7 +14,7 @@
         android:indeterminate="false"
         android:maxHeight="5dip"
         android:minHeight="5dip"
-        android:progress="50"
+        android:progress="0"
         android:progressDrawable="@drawable/greenprogress"
         android:visibility="gone" />
 

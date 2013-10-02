@@ -791,18 +791,20 @@ containing a value of this type.
         public static final int abs__title=0x7f040019;
         public static final int abs__titleDivider=0x7f040015;
         public static final int abs__up=0x7f04000b;
-        public static final int action_refresh=0x7f04002c;
-        public static final int crypt=0x7f040030;
+        public static final int action_refresh=0x7f04002e;
+        public static final int crypt=0x7f040032;
         public static final int disableHome=0x7f040009;
+        public static final int editTextDialogUserInput=0x7f04002d;
         public static final int fileList=0x7f040029;
         public static final int filePickerBack=0x7f040028;
         public static final int homeAsUp=0x7f040006;
         public static final int imageView1=0x7f040027;
+        public static final int layout_root=0x7f04002c;
         public static final int listMode=0x7f040002;
         public static final int normal=0x7f040001;
-        public static final int obscure=0x7f04002f;
+        public static final int obscure=0x7f040031;
         public static final int progressBar1=0x7f040023;
-        public static final int protect=0x7f04002e;
+        public static final int protect=0x7f040030;
         public static final int protectedListView=0x7f04002b;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
@@ -810,7 +812,7 @@ containing a value of this type.
         public static final int tabMode=0x7f040003;
         public static final int textView1=0x7f040024;
         public static final int useLogo=0x7f040004;
-        public static final int view=0x7f04002d;
+        public static final int view=0x7f04002f;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -843,6 +845,7 @@ containing a value of this type.
         public static final int protected_layout=0x7f030017;
         public static final int sherlock_spinner_dropdown_item=0x7f030018;
         public static final int sherlock_spinner_item=0x7f030019;
+        public static final int single_password_input_dialog=0x7f03001a;
     }
     public static final class menu {
         public static final int activity_start=0x7f0b0000;
