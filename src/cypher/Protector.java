@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -72,15 +73,15 @@ public class Protector {
 		}
 		@Override
 		protected int encrypt() {
-			PercXORCopy(fileItem.getFile(), file);
-			return 0;
+			if(PercXORCopy(fileItem.getFile(), file, true)) return 0;
+			return 1;
 		}
 		@Override
 		protected int decrypt() {
-			PercXORCopy(file, fileItem.getFile());
-			return 0;
+			if(PercXORCopy(file, fileItem.getFile(), false)) return 0;
+			return 1;
 		}
-		protected void PercXORCopy(File input, File output){
+		protected boolean PercXORCopy(File input, File output, boolean encrypting){
 			int shadedBitSize = Math.round((input.length()*percentage)/1024);
 			int newProgress = 0;
 			FileInputStream inputStream;
@@ -89,8 +90,20 @@ public class Protector {
 				FileOutputStream outputStream = new FileOutputStream(output);
 				int i;
 				int p = 0;
+				byte[] h = new byte[]{(byte) 255}; 
 			    byte[] b = new byte[1024];
 			    byte[] c = new byte[1024];
+			    if(encrypting){
+			    	outputStream.write(new byte[] {(byte)(h[0]^key[0])}, 0, 1);
+			    }else{
+			    	inputStream.read(h);
+			    	h[0] = (byte) (h[0] ^ key[0]);
+			    }
+			    if(h[0] != (byte)255){
+			    	outputStream.close();
+			    	inputStream.close();
+			    	return false;
+			    }
 			    for(int j = 0; j < shadedBitSize; j++){
 			    	i = inputStream.read(b);
 			    	for(int k = 0; k < 1024; k++){
@@ -119,6 +132,7 @@ public class Protector {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			return true;
 		}
 		
 	}

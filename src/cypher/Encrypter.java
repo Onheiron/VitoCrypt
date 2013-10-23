@@ -108,8 +108,28 @@ public class Encrypter {
 //	}
 	
 	public void Decrypt(File source, FileItem destination){
-		DecryptingTask dt = new DecryptingTask(source, destination);
-		dt.execute();
+		int lastProgress = 0;
+		try {
+			c.init(Cipher.DECRYPT_MODE, k);
+			FileInputStream input = new FileInputStream(source);
+			CipherOutputStream output = new CipherOutputStream(new FileOutputStream("sdcard/VitoCrypt/TMP/" + destination.getFile().getName()), c);
+			int i;
+			int p = 0;
+		    byte[] b = new byte[1024];
+		    while((i=input.read(b))!=-1) {
+		    	output.write(b, 0, i);
+		    	p++;
+		    }
+			output.close();
+			input.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		}
+//		DecryptingTask dt = new DecryptingTask(source, destination);
+//		dt.execute();
 	}
 	
 //	private void copy(InputStream is, OutputStream os) throws IOException {
@@ -216,10 +236,17 @@ public class Encrypter {
 	    }
 		
 		@Override
+		protected void onCancelled(){
+			destination.getFile().delete();
+			destination.ShowLoading();
+			this.execute();
+		}
+		
+		@Override
 		protected void onPostExecute(Integer result) {
 			destination.HideLoading();
 		}
-		
+	
 	}
 	
 }

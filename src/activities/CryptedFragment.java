@@ -34,9 +34,10 @@ public class CryptedFragment extends GenericFragment {
         this.container.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 			public void onItemClick(AdapterView<?> AdapterView, View SelectedView, int position, long id) {
 				FileItem item = (FileItem) SelectedView;
-				start.openContextMenu(item);
+				if(!item.isLoading()) start.openContextMenu(item);
 			}
 		});
+        this.setDirectory(start.getCryptoDirectory());
         return layout;
     }
     
@@ -86,7 +87,6 @@ public class CryptedFragment extends GenericFragment {
 				protector = new Encrypter(start.getIMSI()+password[0]);
 				for(File file : protectedFiles){
 		        	FileItem newFileItem = new FileItem(start,new File("sdcard/VitoCrypt/TMP/" + file.getName()),thisFragment);
-					newFileItem.ShowLoading();
 					protector.Decrypt(file, newFileItem);
 					publishProgress(newFileItem);
 		        }

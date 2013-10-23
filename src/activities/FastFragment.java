@@ -25,7 +25,7 @@ public abstract class FastFragment extends GenericFragment{
         this.container.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 			public void onItemClick(AdapterView<?> AdapterView, View SelectedView, int position, long id) {
 				FileItem item = (FileItem) SelectedView;
-				start.openContextMenu(item);
+				if(!item.isLoading()) start.openContextMenu(item);
 			}
 		});
         return layout;

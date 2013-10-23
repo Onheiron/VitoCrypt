@@ -43,10 +43,10 @@ public abstract class CypherTask  extends AsyncTask<String,Integer,Integer>{
 	
 	protected void onProgressUpdate(Integer... progress) {
         fileItem.setProgress(progress[0]);
-        fileItem.refreshAdapter();
     }
 	@Override
 	protected void onPostExecute(Integer result) {
+		if(result == 1) fileItem.Broken();
 		fileItem.HideLoading();
 		if(!decryption) fileItem.getFile().delete();
 	}

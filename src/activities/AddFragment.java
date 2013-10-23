@@ -40,8 +40,11 @@ public class AddFragment extends GenericFragment {
 		this.container.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 			public void onItemClick(AdapterView<?> AdapterView, View SelectedView, int position, long id) {
 				FileItem item = (FileItem) SelectedView;
-				if(item.getFileType().equalsIgnoreCase("directory")) showFiles(item.getFile());
-				else start.openContextMenu(item);
+				if(item.getFileType().equalsIgnoreCase("directory")){
+					showFiles(item.getFile());
+				}else{
+					if(!item.isLoading()) start.openContextMenu(item);
+				}
 			}
 		});
     	this.back = (LinearLayout) layout.findViewById(R.id.filePickerBack);

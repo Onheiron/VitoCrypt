@@ -11,6 +11,7 @@ import activities.GenericFragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -61,17 +62,15 @@ public class FileItem extends LinearLayout{
 	public String getFileType() { return fileType; }
 	public void ShowLoading(){ loading.setVisibility(VISIBLE); }
 	public void HideLoading(){ loading.setVisibility(GONE); }
-	public void setProgress(int progress){ loading.setProgress(progress); }
+	public void setProgress(int progress){ 
+		loading.setProgress(progress); 
+		this.refreshAdapter();
+	}
 	public void refreshAdapter(){ ((GenericFragment)caller).refreshAdapter(); }
 	public GenericFragment getCaller(){ return (GenericFragment) this.caller; }
-	public void Queued(){
-		this.subText.setText("in coda...");
-	}
-	public void Protecting(){
-		this.subText.setTextColor(Color.parseColor("#86CB86"));
-		this.subText.setText("... protezione avviata...");
-	}
-	public void Protected(){
-		this.subText.setText("...protetto!");
+	public void Broken(){ this.subText.setText("broken..."); }
+	public boolean isLoading(){
+		if(this.loading.getVisibility() == View.VISIBLE) return true;
+		return false;
 	}
 }
