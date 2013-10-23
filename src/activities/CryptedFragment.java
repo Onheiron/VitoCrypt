@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 
 import support.FileItem;
-import chiper.Encrypter;
-import chiper.Protector;
 
 import com.example.vitocrypt.R;
+
+import cypher.Encrypter;
+import cypher.Protector;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -111,7 +112,7 @@ public class CryptedFragment extends GenericFragment {
     @Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 	    super.onCreateContextMenu(menu, v, menuInfo);
-	    menu.getItem(1).setVisible(false);
+	    menu.getItem(3).setVisible(false);
 	}
  
 }

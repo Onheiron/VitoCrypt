@@ -9,4 +9,8 @@
           android:title="Oscura" />
     <item android:id="@+id/crypt"
           android:title="Cripta" />
+    <item android:id="@+id/restore"
+          android:title="Ripristina" />
+    <item android:id="@+id/delete"
+          android:title="Elimina" />
 </menu>

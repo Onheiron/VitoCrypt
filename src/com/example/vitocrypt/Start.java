@@ -27,10 +27,6 @@ public class Start extends TabSwipeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addTab( "Aggiungi", AddFragment.class);
-        addTab( "Protetti", ProtectedFragment.class);
-        addTab( "Oscurati", ObscuredFragment.class);
-        addTab( "Criptati", CryptedFragment.class);
         
         mTelephonyMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         imsi = mTelephonyMgr.getSubscriberId();
@@ -49,6 +45,12 @@ public class Start extends TabSwipeActivity {
 	    	shadeDirectory.mkdir();
 	    	protectDirectory.mkdir();
 	    }
+	    
+	    addTab( "Aggiungi", AddFragment.class);
+        addTab( "Protetti", ProtectedFragment.class);
+        addTab( "Oscurati", ObscuredFragment.class);
+        addTab( "Criptati", CryptedFragment.class);
+	    
     }
     
     public File getSDFolder(){ return this.SDFolder; }

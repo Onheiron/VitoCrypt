@@ -1,4 +1,4 @@
-package chiper;
+package cypher;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,66 +59,66 @@ public class Encrypter {
 		}
 	}
 	
-	public void Encrypt(File file, String path){
-		try {
-			c.init(Cipher.ENCRYPT_MODE, k);
-			FileInputStream input = new FileInputStream(file);
-			CipherOutputStream output = new CipherOutputStream(new FileOutputStream(path), c);
-			copy(input, output);
-			output.close();
-			
-		} catch (FileNotFoundException e) {
-			// WTF no file
-			e.printStackTrace();
-		} catch (IOException e) {
-			// Can't write the file
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			// Bad key
-			e.printStackTrace();
-		}
-	}
+//	public void Encrypt(File file, String path){
+//		try {
+//			c.init(Cipher.ENCRYPT_MODE, k);
+//			FileInputStream input = new FileInputStream(file);
+//			CipherOutputStream output = new CipherOutputStream(new FileOutputStream(path), c);
+//			copy(input, output);
+//			output.close();
+//			
+//		} catch (FileNotFoundException e) {
+//			// WTF no file
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// Can't write the file
+//			e.printStackTrace();
+//		} catch (InvalidKeyException e) {
+//			// Bad key
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void Encrypt(FileItem fileItem){
 		EncryptingTask et = new EncryptingTask(fileItem);
 		et.execute();
 	}
 	
-	public File Decrypt(String pathFrom, String pathTo){
-		File temp = new File(pathTo);
-		try {
-			c.init(Cipher.DECRYPT_MODE, k);
-			CipherInputStream input = new CipherInputStream(new FileInputStream(pathFrom), c);
-			FileOutputStream output = new FileOutputStream(temp);
-			copy(input, output);
-			input.close();
-		    output.close();
-			
-		} catch (FileNotFoundException e) {
-			// WTF no file
-			e.printStackTrace();
-		} catch (IOException e) {
-			// Can't write the file
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			// Bad key
-			e.printStackTrace();
-		}
-		return temp;
-	}
+//	public File Decrypt(String pathFrom, String pathTo){
+//		File temp = new File(pathTo);
+//		try {
+//			c.init(Cipher.DECRYPT_MODE, k);
+//			CipherInputStream input = new CipherInputStream(new FileInputStream(pathFrom), c);
+//			FileOutputStream output = new FileOutputStream(temp);
+//			copy(input, output);
+//			input.close();
+//		    output.close();
+//			
+//		} catch (FileNotFoundException e) {
+//			// WTF no file
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// Can't write the file
+//			e.printStackTrace();
+//		} catch (InvalidKeyException e) {
+//			// Bad key
+//			e.printStackTrace();
+//		}
+//		return temp;
+//	}
 	
 	public void Decrypt(File source, FileItem destination){
 		DecryptingTask dt = new DecryptingTask(source, destination);
 		dt.execute();
 	}
 	
-	private void copy(InputStream is, OutputStream os) throws IOException {
-	    int i;
-	    byte[] b = new byte[1024];
-	    while((i=is.read(b))!=-1) {
-	      os.write(b, 0, i);
-	    }
-	  }
+//	private void copy(InputStream is, OutputStream os) throws IOException {
+//	    int i;
+//	    byte[] b = new byte[1024];
+//	    while((i=is.read(b))!=-1) {
+//	      os.write(b, 0, i);
+//	    }
+//	  }
 
 	public class EncryptingTask extends AsyncTask<String, Integer, Integer>{
 		FileItem source;
@@ -141,7 +141,6 @@ public class Encrypter {
 			    	output.write(b, 0, i);
 			    	p++;
 			    	int newProgress = Math.round((p*102400)/source.getFile().length());
-			    	System.out.println(lastProgress);
 			    	if(newProgress != lastProgress){
 			    		publishProgress(newProgress);
 			    		lastProgress = newProgress;
@@ -187,7 +186,7 @@ public class Encrypter {
 			try {
 				c.init(Cipher.DECRYPT_MODE, k);
 				FileInputStream input = new FileInputStream(source);
-				CipherOutputStream output = new CipherOutputStream(new FileOutputStream(destination.getFile()), c);
+				CipherOutputStream output = new CipherOutputStream(new FileOutputStream("sdcard/VitoCrypt/TMP/" + destination.getFile().getName()), c);
 				int i;
 				int p = 0;
 			    byte[] b = new byte[1024];
@@ -195,7 +194,6 @@ public class Encrypter {
 			    	output.write(b, 0, i);
 			    	p++;
 			    	int newProgress = Math.round((p*102400)/source.length());
-			    	System.out.println(lastProgress);
 			    	if(newProgress != lastProgress){
 			    		publishProgress(newProgress);
 			    		lastProgress = newProgress;

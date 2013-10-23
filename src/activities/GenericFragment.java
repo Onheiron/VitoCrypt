@@ -1,18 +1,19 @@
 package activities;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 
 import support.FileItem;
 import support.FileItemAdapter;
 
-import chiper.Encrypter;
-import chiper.Protector;
 
 import com.example.vitocrypt.R;
 import com.example.vitocrypt.Start;
 
-import android.app.Activity;
+import cypher.Encrypter;
+import cypher.Protector;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -26,7 +27,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,6 +40,8 @@ public abstract class GenericFragment extends Fragment{
 	ListView container;
 	FileItemAdapter adapter;
 	Fragment thisFragment = this;
+	File currentDirectory;
+	boolean working = false;
 	
 	public void onCreate(Context context, ListView container){
 		this.start = (Start) context;
@@ -62,7 +64,7 @@ public abstract class GenericFragment extends Fragment{
 	public boolean onContextItemSelected(MenuItem item) {
 	    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 	    final FileItem fileItem = (FileItem)info.targetView;
-	    
+	    final File deletingFile = fileItem.getCaller().getDirectory() != null ? new File(fileItem.getCaller().getDirectory()+"/"+fileItem.getFile().getName()) : null;
 	    // get prompts.xml view
 		LayoutInflater li = LayoutInflater.from(start);
 		View promptsView = li.inflate(R.layout.single_password_input_dialog, null);
@@ -84,6 +86,7 @@ public abstract class GenericFragment extends Fragment{
 					fileItem.ShowLoading();
 					Protector protector = new Protector(start.getIMSI());
 			    	protector.Protect(fileItem,(float) 0.1);
+			    	if(deletingFile != null) deletingFile.delete();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -99,6 +102,7 @@ public abstract class GenericFragment extends Fragment{
 							fileItem.ShowLoading();
 							Protector protector = new Protector(start.getIMSI() + userInput.getText().toString());
 					    	protector.Obscure(fileItem,(float) 0.1);
+					    	if(deletingFile != null) deletingFile.delete();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -125,6 +129,7 @@ public abstract class GenericFragment extends Fragment{
 							fileItem.ShowLoading();
 							Encrypter protector = new Encrypter(start.getIMSI() + userInput.getText().toString());
 					    	protector.Encrypt(fileItem);
+					    	if(deletingFile != null) deletingFile.delete();
 						} catch (InvalidKeyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -152,5 +157,9 @@ public abstract class GenericFragment extends Fragment{
 	public Start getContext(){ return this.start; }
 	public void refreshAdapter() { adapter.notifyDataSetChanged(); }
 	public abstract void onSelect();
-
+	public void setDirectory(File directory){this.currentDirectory = directory;}
+	public File getDirectory(){ return this.currentDirectory; }
+	public void DoneWorking(){ this.working = false; }
+	public void StartWorking(){ this.working = true; }
+	public boolean isWorking(){ return this.working; }
 }

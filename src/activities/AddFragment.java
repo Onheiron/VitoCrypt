@@ -6,8 +6,9 @@ import java.io.IOException;
 
 import magic.TypeMagic;
 import support.FileItem;
-import chiper.Protector;
 import com.example.vitocrypt.R;
+
+import cypher.Protector;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -108,5 +109,7 @@ public class AddFragment extends GenericFragment {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 	    super.onCreateContextMenu(menu, v, menuInfo);
+	    menu.getItem(4).setVisible(false);
+	    menu.getItem(5).setVisible(false);
 	}
 }
